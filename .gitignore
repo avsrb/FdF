@@ -1,9 +1,8 @@
-.DS_Store
-.DS_Store?
-.out
-.out?
-.o
-.o?
-.vscode
-.idea
+*.DS_Store
+*.DS_Store?
+*.out?
+*.o
+*.o?
+*.vscode
+*.idea
 
