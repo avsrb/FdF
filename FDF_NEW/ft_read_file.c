@@ -1,9 +1,9 @@
 #include "fdf.h"
 
-unsigned int	ft_wdcounter(char *str, char c)
+int	ft_wdcounter(char *str, char c)
 {
-	unsigned int	i;
-	unsigned int	newstr;
+	int	i;
+	int	newstr;
 
 	i = 0;
 	newstr = 0;
@@ -25,13 +25,14 @@ int	get_height(char *file_name)
 	int		fd;
 	int		height;
 
-	fd = open(file_name, O_RDONLY, 0);
+	fd = open(file_name, O_RDONLY);
 	height = 0;
 	while (get_next_line(fd, &line))
 	{
 		height++;
 		free(line);
 	}
+	free(line);
 	close(fd);
 	return (height);
 }
@@ -42,7 +43,7 @@ int	get_width(char *file_name)
 	int		fd;
 	int		width;
 
-	fd = open(file_name, O_RDONLY, 0);
+	fd = open(file_name, O_RDONLY);
 	get_next_line(fd, &line);
 	width = ft_wdcounter(line, ' ');
 	free(line);
@@ -52,9 +53,9 @@ int	get_width(char *file_name)
 
 void	fill_matrix(int *z_line, char *line)
 {
-	char **nums;
-	int i;
-	
+	char	**nums;
+	int		i;
+
 	nums = ft_split(line, ' ');
 	i = 0;
 	while (nums[i])
@@ -68,9 +69,9 @@ void	fill_matrix(int *z_line, char *line)
 
 void	read_file(char *file_name, fdf *data)
 {
-	int	fd;
-	int i;
-	char *line;
+	int		fd;
+	int		i;
+	char	*line;
 
 	data->height = get_height(file_name);
 	data->width = get_width(file_name);
@@ -78,7 +79,7 @@ void	read_file(char *file_name, fdf *data)
 	i = 0;
 	while (i <= data->height)
 		data->z_matrix[i++] = (int *)malloc(sizeof(int) * (data->width + 1));
-	fd = open(file_name, O_RDONLY, 0);
+	fd = open(file_name, O_RDONLY);
 	i = 0;
 	while (get_next_line(fd, &line))
 	{
@@ -86,6 +87,7 @@ void	read_file(char *file_name, fdf *data)
 		free(line);
 		i++;
 	}
+	free(line);
 	close(fd);
 	data->z_matrix[i] = NULL;
 }
