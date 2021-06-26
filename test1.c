@@ -1,4 +1,4 @@
-#include <mlx.h>
+#include "minilibx_macos/mlx.h"
 
 int	main(void)
 {

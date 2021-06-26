@@ -1,4 +1,4 @@
-#include <mlx.h>
+#include "minilibx_macos/mlx.h"
 #include <stdio.h>
 int x = 0;
 int y = 0;
