@@ -3,7 +3,8 @@
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <stdio.h> //удалить
+#include <math.h>
 #include "libft/libft.h"
 #include "get_next_line/get_next_line.h"
 #include "ft_printf/ft_printf.h"
@@ -16,6 +17,9 @@ typedef struct
 	int	**z_matrix;
 	int	zoom;
 	int	color;
+	int	shift_x;
+	int	shift_y;
+	int	shift_zoom;
 
 	void	*mlx_ptr;
 	void	*win_ptr;

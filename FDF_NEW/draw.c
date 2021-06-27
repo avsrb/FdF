@@ -15,13 +15,7 @@ float	ft_max(float x, float y)
 	else
 		return (y);
 }
-/*
-void	get_step(float *x, float *y, t_point p2, t_point p1)
-{
-	*x = p2.x - p1.x;
-	*y = p2.y - p1.y;
-}
-*/
+
 float	mod(float a)
 {
 	if (a < 0)
@@ -35,6 +29,12 @@ float	max_mod(float a, float b)
 		return (mod(a));
 	else
 		return (mod(b));
+}
+
+void	isometric (float *x, float *y, int z)
+{
+	*x = (*x - *y) * cos(0.8);
+	*y = (*x + *y) * sin(0.8) - z;
 }
 
 void	bresenham(float x, float y, float x1, float y1, fdf *data)
@@ -53,10 +53,18 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 	x1 *=data->zoom;
 	y1 *=data->zoom;
 
-	data->color = (z) ? 0xe80c0c : 0xffffff;
+	data->color = (z || z1) ? 0xe80c0c : 0xffffff;
+
+	isometric(&x, &y, z);
+	isometric(&x1, &y1, z1);
+
+	x += data->shift_x;
+	y += data->shift_y;
+	x1 += data->shift_x;
+	y1 += data->shift_y;
+
 	x_step = x1 - x;
 	y_step = y1 - y;
-	
 	max = ft_max((ft_mod(x_step)), (ft_mod(y_step)));
 	x_step /= max;
 	y_step /= max;
