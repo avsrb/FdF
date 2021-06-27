@@ -15,6 +15,9 @@ int	deal_key(int key, fdf *data)
 		data->zoom += 5;
 	if (key == 27)
 		data->zoom -= 5;
+	if (key == 53)
+		exit(0);
+
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	draw(data);
 	return (0);
