@@ -14,6 +14,8 @@ typedef struct
 	int	width;
 	int	height;
 	int	**z_matrix;
+	int	zoom;
+	int	color;
 
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -21,5 +23,6 @@ typedef struct
 
 void	read_file(char *file_name, fdf *data);
 void	bresenham(float x, float y, float x1, float y1, fdf *data);
+void	draw(fdf *data);
 
 #endif
