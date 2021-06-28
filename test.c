@@ -13,11 +13,11 @@ int	key_hook(int keycode, t_vars *vars)
 	printf("Hello from key_hook!\n");
 }
 
-// int close(int keycode, t_vars *vars)
-// {
-// 	mlx_destroy_window(vars->mlx, vars->win);
-// 	exit(0);
-// }
+int close(int keycode, t_vars *vars)
+{
+	mlx_destroy_window(vars->mlx, vars->win);
+	exit(0);
+}
 
 
 int	main(void)

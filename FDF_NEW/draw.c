@@ -48,6 +48,8 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 	z = data->z_matrix[(int)y][(int)x];
 	z1 = data->z_matrix[(int)y1][(int)x1];
 
+	// if (data->zoom < 0) Продумать риверсию
+	// 	data->zoom = 30;
 	x *=data->zoom;
 	y *=data->zoom;
 	x1 *=data->zoom;
