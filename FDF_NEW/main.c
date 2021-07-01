@@ -19,7 +19,13 @@ int mouse_move(int x, int y, fdf *data)
 
 int	mouse_key(int key, int x, int y, fdf *data)
 {
-	// ft_printf("%d\n", key);
+	 ft_printf("%d\n", key);
+	if (key == 1)
+		data->shift_z += 0.1;
+	if (key == 2)
+		data->shift_z -= 0.1;
+	if (key == 3)
+		ft_init(data);
 	if (key == 4)
 		data->zoom += 5;
 	if (key == 5)
@@ -51,6 +57,9 @@ int	press_key(int key, fdf *data)
 	return (0);
 }
 
+#define RESOLUTION_X 1920
+#define RESOLUTION_Y 1080
+#define ZOOM 50
 
 int main(int argc, char **argv)
 {
@@ -58,11 +67,12 @@ int main(int argc, char **argv)
 	(void)argc;
 
 	data = (fdf*)malloc(sizeof(fdf));
+	ft_init(data);
 	// проверка на файл а не папку
 	read_file(argv[1], data);
 	data->mlx_ptr = mlx_init();
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, "FDF");
-	data->zoom = 20;
+	data->win_ptr = mlx_new_window(data->mlx_ptr, RESOLUTION_X, RESOLUTION_Y, "FDF");
+	data->zoom = ZOOM;
 	draw(data);
 	//mlx_key_hook(data->win_ptr, press_key, data);
 	mlx_hook(data->win_ptr, 2, 0, press_key, data);
@@ -70,4 +80,17 @@ int main(int argc, char **argv)
 	mlx_hook(data->win_ptr, 6, 0, mouse_move, data);
 	mlx_hook(data->win_ptr, 17, 0, ft_close, data);
 	mlx_loop(data->mlx_ptr);
+}
+
+
+void	ft_init(fdf *data)
+{
+	// data->width = 0;
+	// data->height = 0;
+	// data->zoom = 0;
+	data->shift_x = RESOLUTION_X/2;
+	data->shift_y = RESOLUTION_Y/2;
+	data->shift_z = 0.523599;
+	data->shift_zoom = 0;
+
 }

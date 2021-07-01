@@ -19,12 +19,15 @@ typedef struct
 	int	color;
 	int	shift_x;
 	int	shift_y;
+	float shift_z;
 	int	shift_zoom;
 
 	void	*mlx_ptr;
 	void	*win_ptr;
 }				fdf;
 
+void	ft_init(fdf *data);
+int	ft_close(void *param);
 void	read_file(char *file_name, fdf *data);
 void	bresenham(float x, float y, float x1, float y1, fdf *data);
 void	draw(fdf *data);
