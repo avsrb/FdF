@@ -47,8 +47,9 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 	y1 *=data->zoom;
 
 	data->color = (z || z1) ? 0xe80c0c : 0xffffff;
-	z += data->shift_z;
-	z1 += data->shift_z1;
+	//z += data->shift_z1;
+	if (z1 > 0)
+		z1 += data->shift_z1;
 
 	isometric(&x, &y, z, data);
 	isometric(&x1, &y1, z1, data);

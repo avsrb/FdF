@@ -42,7 +42,7 @@ int	mouse_key(int key, int x, int y, fdf *data)
 
 int	press_key(int key, fdf *data)
 {
-	 ft_printf("%d\n", key);
+	ft_printf("%d\n", key);
 	if (key == 13)
 		data->shift_y -= 10;
 	if (key == 1)
@@ -57,14 +57,14 @@ int	press_key(int key, fdf *data)
 		data->zoom -= 5;
 	if (key == 53 || key == 17)
 		ft_close(data);
-	if (key == 14)
-		data->shift_z -= 0.1;
-	if (key == 12)
-		data->shift_z += 0.1;
-	if (key == 6)
-		data->shift_z1 -= 30;
-	if (key == 8)
-		data->shift_z1 += 30;
+	 if (key == 14)
+	 	data->shift_z -= 0.1;
+	 if (key == 12)
+	 	data->shift_z += 0.1;
+	 if (key == 6)
+	 	data->shift_z1 -= 30;
+	 if (key == 8)
+	 	data->shift_z1 += 30;
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	draw(data);
 	return (0);
@@ -72,7 +72,7 @@ int	press_key(int key, fdf *data)
 
 #define RESOLUTION_X 1920
 #define RESOLUTION_Y 1080
-#define ZOOM 50
+#define ZOOM 20
 
 int main(int argc, char **argv)
 {
