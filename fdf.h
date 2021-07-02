@@ -20,7 +20,9 @@ typedef struct
 	int	shift_x;
 	int	shift_y;
 	float shift_z;
+	float shift_z1;
 	int	shift_zoom;
+	int	flag_mv_mouse;
 
 	void	*mlx_ptr;
 	void	*win_ptr;

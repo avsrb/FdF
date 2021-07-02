@@ -5,7 +5,9 @@
 
 float	ft_mod(float i)
 {
-	return (i < 0) ? -i : i;
+	if (i < 0)
+		return (-i);
+	return (i);
 }
 
 float	ft_max(float x, float y)
@@ -16,25 +18,14 @@ float	ft_max(float x, float y)
 		return (y);
 }
 
-float	mod(float a)
-{
-	if (a < 0)
-		return (a * -1);
-	return (a);
-}
-
-float	max_mod(float a, float b)
-{
-	if (mod(a) > mod(b))
-		return (mod(a));
-	else
-		return (mod(b));
-}
-
 void	isometric (float *x, float *y, int z, fdf *data)
 {
 	*x = (*x - *y) * cos(data->shift_z);
 	*y = (*x + *y) * sin(data->shift_z) - z;
+	// *x = *x * cos(data->shift_z) - *y * sin(data->shift_z);
+	// *y = *y * sin(data->shift_z) + *y * cos(data->shift_z) - z;
+
+
 }
 
 void	bresenham(float x, float y, float x1, float y1, fdf *data)
@@ -57,7 +48,7 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 
 	data->color = (z || z1) ? 0xe80c0c : 0xffffff;
 	z += data->shift_z;
-	z1 += data->shift_z;
+	z1 += data->shift_z1;
 
 	isometric(&x, &y, z, data);
 	isometric(&x1, &y1, z1, data);
