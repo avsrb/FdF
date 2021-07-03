@@ -73,6 +73,11 @@ void	read_file(char *file_name, fdf *data)
 	int		i;
 	char	*line;
 
+	if(ft_strncmp(&file_name[ft_strlen(file_name) - 4], ".fdf", 4))
+		{
+			write (1, "Check_map\n", 10);
+			exit(-1);
+		}
 	data->height = get_height(file_name);
 	data->width = get_width(file_name);
 	data->z_matrix = (int **)malloc(sizeof(int *) * (data->height + 1));
@@ -80,8 +85,6 @@ void	read_file(char *file_name, fdf *data)
 	while (i <= data->height)
 		data->z_matrix[i++] = (int *)malloc(sizeof(int) * (data->width + 1));
 	fd = open(file_name, O_RDONLY);
-	if (fd == -1)
-		ft_close(0);
 	i = 0;
 	while (get_next_line(fd, &line))
 	{

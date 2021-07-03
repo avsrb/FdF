@@ -38,19 +38,20 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 
 	z = data->z_matrix[(int)y][(int)x];
 	z1 = data->z_matrix[(int)y1][(int)x1];
-
-	// if (data->zoom < 0) Продумать риверсию
-	// 	data->zoom = 30;
+	
+	if (data->zoom <= 2)
+		data->zoom = 2;
 	x *=data->zoom;
 	y *=data->zoom;
 	x1 *=data->zoom;
 	y1 *=data->zoom;
 
 	data->color = (z || z1) ? 0xe80c0c : 0xffffff;
-	//z += data->shift_z1;
 	if (z1 > 0)
+	{
 		z1 += data->shift_z1;
-
+		z += data->shift_z1;
+	}
 	isometric(&x, &y, z, data);
 	isometric(&x1, &y1, z1, data);
 
@@ -82,6 +83,8 @@ void	draw(fdf *data)
 	int y;
 
 	y = 0;
+	
+	
 
 	while (y < data->height)
 	{
