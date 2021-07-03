@@ -19,8 +19,10 @@ typedef struct
 	int	color;
 	int	shift_x;
 	int	shift_y;
+	float	sin;
+	float	cos;
+	int	flatten;
 	float shift_z;
-	float shift_z1;
 	int	shift_zoom;
 	int	flag_mv_mouse;
 
@@ -29,7 +31,7 @@ typedef struct
 }				fdf;
 
 void	ft_init(fdf *data);
-int	ft_close(void *param);
+int		ft_close(void *param);
 void	read_file(char *file_name, fdf *data);
 void	bresenham(float x, float y, float x1, float y1, fdf *data);
 void	draw(fdf *data);

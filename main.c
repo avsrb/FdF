@@ -9,7 +9,7 @@ int	ft_close(void *param)
 
 void	ft_error(void)
 {
-	write (1, "Check_arguments\n", 16);
+	write (1, "Error\n", 6);
 	exit(-1);
 }
 
@@ -49,32 +49,45 @@ int	mouse_key(int key, int x, int y, fdf *data)
 int	press_key(int key, fdf *data)
 {
 	//ft_printf("%d\n", key);
-	if (key == 13)
+	if (key == 126)
 		data->shift_y -= 10;
-	if (key == 1)
+	if (key == 125)
 		data->shift_y += 10;
-	if (key == 0)
+	if (key == 123)
 		data->shift_x -= 10;
-	if (key == 2)
+	if (key == 124)
 		data->shift_x += 10;
-	if (key == 24)
+	if (key == 24 || key == 69)
 		data->zoom += 2;
-	if (key == 27)
+	if (key == 27 || key == 78)
 		data->zoom -= 2;
-	if (key == 53 || key == 17)
+	if (key == 53)
 		ft_close(data);
-	if (key == 14)
+	if (key == 92 || key == 85)
 	{
-		data->shift_z -= 0.1;
+		data->sin -= 0.1;
+		data->cos -= 0.1;
 	}
-		printf("%f\n", data->shift_z);
-	if (key == 12)
-		data->shift_z += 0.1;
-	if (key == 6)
-		data->shift_z1 -= 30;
-	if (key == 8)
-		data->shift_z1 += 30;
-
+	printf("%d\n", key);
+	if (key == 83 || key == 89)
+	{
+		data->sin += 0.1;
+		data->cos += 0.1;
+	}
+	if (key == 43)
+		data->flatten -= 1;
+	if (key == 47)
+		data->flatten += 1;
+	if (key == 35)
+	{
+		data->sin = 0;
+		data->cos = 0;
+	}
+	if (key == 34)
+	{
+		data->sin = 0.523599;
+		data->cos = 0.523599;
+	}
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	draw(data);
 	return (0);
@@ -88,11 +101,12 @@ int main(int argc, char **argv)
 {
 	fdf	data;
 
-	// проверка на файл а не папку!!!!!!!!!!!!!!!!
 	if (argc > 2 || argc == 1)
 		ft_error();
 	read_file(argv[1], &data);
 	data.mlx_ptr = mlx_init();
+	if (!data.mlx_ptr)
+		ft_error();
 	data.win_ptr = mlx_new_window(data.mlx_ptr, RESOLUTION_X, RESOLUTION_Y, "FDF");
 	ft_init(&data);
 	draw(&data);
@@ -109,13 +123,15 @@ void	ft_init(fdf *data)
 {
 	// data->width = 0;
 	// data->height = 0;
-	// data->zoom = 0;
+	data->flatten = 1;
 	data->shift_x = RESOLUTION_X/2;
-	data->shift_y = RESOLUTION_Y/2;
-	data->shift_z = 0.523599;
+	data->shift_y = RESOLUTION_Y/3;
+	data->sin = 0.523599;
+	data->cos = 0.523599;
+
 	data->zoom = ZOOM;
 
-	data->shift_z1 = 0;
+	data->shift_z = 0;
 	data->shift_zoom = 0;
 	data->flag_mv_mouse = 0;
 }

@@ -18,10 +18,28 @@ float	ft_max(float x, float y)
 		return (y);
 }
 
+void	ft_man(fdf *data)
+{
+	int y; 
+	y = 10;
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 60, y, 0xffffff, "How to Use");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 30, 0xffffff, "Zoom: Scroll or +/-");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Move: Arrows");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Flatten: </>");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Rotate: Press left on or right off mouse button"); ///хуета
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Rotate:");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "X-Axis - 2/8");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "Y-Axic - 4/6");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "Z-Axic - 1(3)/7(9)");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Projection");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "ISO: I Key");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "Parallel: P Key");
+}
+
 void	isometric (float *x, float *y, int z, fdf *data)
 {
-	*x = (*x - *y) * cos(data->shift_z);
-	*y = (*x + *y) * sin(data->shift_z) - z;
+	*x = (*x - *y) * cos(data->cos);
+	*y = (*x + *y) * sin(data->sin) - z * data->flatten;
 	// *x = *x * cos(data->shift_z) - *y * sin(data->shift_z);
 	// *y = *y * sin(data->shift_z) + *y * cos(data->shift_z) - z;
 
@@ -49,8 +67,8 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 	data->color = (z || z1) ? 0xe80c0c : 0xffffff;
 	if (z1 > 0)
 	{
-		z1 += data->shift_z1;
-		z += data->shift_z1;
+		z1 += data->shift_z;
+		z += data->shift_z;
 	}
 	isometric(&x, &y, z, data);
 	isometric(&x1, &y1, z1, data);
@@ -65,9 +83,7 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 	max = ft_max((ft_mod(x_step)), (ft_mod(y_step)));
 	x_step /= max;
 	y_step /= max;
-	// printf("LOC %f %f, %f %f\n", x, y, x1, y1);
-	// printf("x_step %f   y_step %f\n", x_step, y_step);
-	// printf("MAX %f\n", max);
+
 
 	while ((int)(x - x1) || (int)(y - y1))
 	{
@@ -83,9 +99,7 @@ void	draw(fdf *data)
 	int y;
 
 	y = 0;
-	
-	
-
+	ft_man(data);
 	while (y < data->height)
 	{
 		x = 0;
