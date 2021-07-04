@@ -6,7 +6,7 @@
 float	ft_mod(float i)
 {
 	if (i < 0)
-		return (-i);
+		return (i * -1);
 	return (i);
 }
 
@@ -40,8 +40,8 @@ void	isometric (float *x, float *y, int z, fdf *data)
 {
 	*x = (*x - *y) * cos(data->cos);
 	*y = (*x + *y) * sin(data->sin) - z * data->flatten;
-	// *x = *x * cos(data->shift_z) - *y * sin(data->shift_z);
-	// *y = *y * sin(data->shift_z) + *y * cos(data->shift_z) - z;
+	//*x = *x * cos(data->cos) - *y * sin(data->sin);
+	//*y = *y * sin(data->sin) + *y * cos(data->cos) - z;
 
 
 }

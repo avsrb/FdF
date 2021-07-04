@@ -15,16 +15,16 @@ typedef struct
 	int	width;
 	int	height;
 	int	**z_matrix;
-	int	zoom;
+	float	zoom;
 	int	color;
 	int	shift_x;
 	int	shift_y;
 	float	sin;
 	float	cos;
-	int	flatten;
-	float shift_z;
+	int shift_z;
 	int	shift_zoom;
 	int	flag_mv_mouse;
+	int	flatten;
 
 	void	*mlx_ptr;
 	void	*win_ptr;

@@ -68,7 +68,6 @@ int	press_key(int key, fdf *data)
 		data->sin -= 0.1;
 		data->cos -= 0.1;
 	}
-	printf("%d\n", key);
 	if (key == 83 || key == 89)
 	{
 		data->sin += 0.1;
@@ -79,15 +78,17 @@ int	press_key(int key, fdf *data)
 	if (key == 47)
 		data->flatten += 1;
 	if (key == 35)
-	{
-		data->sin = 0;
-		data->cos = 0;
-	}
+		data->sin = data->cos = 0;
 	if (key == 34)
-	{
-		data->sin = 0.523599;
-		data->cos = 0.523599;
-	}
+		data->sin = data->cos = 0.523599;
+	if (key == 84)
+		data->sin += 0.1;
+	if (key == 91)
+		data->sin -= 0.1;
+	if (key == 86)
+		data->cos += 0.1;
+	if (key == 88)
+		data->cos -= 0.1;
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	draw(data);
 	return (0);
@@ -126,8 +127,10 @@ void	ft_init(fdf *data)
 	data->flatten = 1;
 	data->shift_x = RESOLUTION_X/2;
 	data->shift_y = RESOLUTION_Y/3;
-	data->sin = 0.523599;
-	data->cos = 0.523599;
+	//data->sin = 0.523599;
+	//data->cos = 0.523599;
+	data->sin = 0.8;
+	data->cos = 0.8;
 
 	data->zoom = ZOOM;
 
