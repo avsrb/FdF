@@ -97,9 +97,7 @@ int	press_key(int key, fdf *data)
 	return (0);
 }
 
-#define RESOLUTION_X 1920
-#define RESOLUTION_Y 1080
-#define ZOOM 10
+
 
 int main(int argc, char **argv)
 {

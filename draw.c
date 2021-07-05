@@ -46,14 +46,28 @@ void	isometric (float *x, float *y, int z, fdf *data)
 
 }
 
-void	bresenham(float x, float y, float x1, float y1, fdf *data)
+void	pixel_put(t_img *img, int x, int y, int color)
+{
+	char	*dst;
+	if (x > 0 && x < RESOLUTION_X)
+	{
+		if (y > 0 && y < RESOLUTION_Y)
+		{
+		dst = img->xpm_data + (y * img->size_line + x * (img->bits_per_pixel / 8));
+		*(unsigned int *)dst = color;
+		}
+	}
+}
+
+
+void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 {
 	float	x_step;
 	float	y_step;
 	int	max;
 	int	z;
 	int	z1;
-
+	
 	z = data->z_matrix[(int)y][(int)x];
 	z1 = data->z_matrix[(int)y1][(int)x1];
 	
@@ -84,10 +98,10 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data)
 	x_step /= max;
 	y_step /= max;
 
-
+	
 	while ((int)(x - x1) || (int)(y - y1))
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, data->color);
+		pixel_put(img, x, y, data->color);
 		x += x_step;
 		y += y_step;
 	}
@@ -97,9 +111,11 @@ void	draw(fdf *data)
 {
 	int x;
 	int y;
-	//t_img	imp;
+	t_img	img;
 
-	ft_man(data);
+	img.img_ptr = mlx_new_image(data->mlx_ptr, RESOLUTION_X, RESOLUTION_Y);
+	img.xpm_data = mlx_get_data_addr(img.img_ptr, &img.bits_per_pixel, &img.size_line, &img.endian);
+
 	y = 0;
 	while (y < data->height)
 	{
@@ -107,11 +123,13 @@ void	draw(fdf *data)
 		while (x < data->width)
 		{
 			if (x < data->width - 1)
-				bresenham(x, y, x + 1, y, data);
+				bresenham(x, y, x + 1, y, data, &img);
 			if (y < data->height - 1)
-				bresenham(x, y, x, y + 1, data);
+				bresenham(x, y, x, y + 1, data, &img);
 			x++;
 		}
 		y++;
 	}
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img.img_ptr, 0, 0);
+	ft_man(data);
 }

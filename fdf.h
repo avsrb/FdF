@@ -12,6 +12,11 @@
 #include "ft_printf/ft_printf.h"
 #include "minilibx_macos/mlx.h"
 
+#define RESOLUTION_X 1920
+#define RESOLUTION_Y 1080
+#define ZOOM 1
+
+
 typedef struct
 {
 	int	width;
@@ -35,17 +40,17 @@ typedef struct
 typedef struct
 {
 	void	*img_ptr;
-	char	**xpm_data;
-	int	*bits_per_pixel;
-	int	*size_line;
-	int	*endian;
+	char	*xpm_data;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
 }				t_img;
 
 void	ft_init(fdf *data);
 int		ft_close(void *param);
 void	ft_error(char *s);
 void	read_file(char *file_name, fdf *data);
-void	bresenham(float x, float y, float x1, float y1, fdf *data);
+void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img);
 void	draw(fdf *data);
 
 #endif
