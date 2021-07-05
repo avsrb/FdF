@@ -7,10 +7,13 @@ int	ft_close(void *param)
 	exit(0);
 }
 
-void	ft_error(void)
+void	ft_error(char *s)
 {
-	write (1, "Error\n", 6);
-	exit(-1);
+	if (errno == 0)
+		ft_putendl_fd(s, 2);
+	else
+		perror(s);
+	exit(1);
 }
 
 int mouse_move(int x, int y, fdf *data)
@@ -102,20 +105,22 @@ int main(int argc, char **argv)
 {
 	fdf	data;
 
-	if (argc > 2 || argc == 1)
-		ft_error();
-	read_file(argv[1], &data);
-	data.mlx_ptr = mlx_init();
-	if (!data.mlx_ptr)
-		ft_error();
-	data.win_ptr = mlx_new_window(data.mlx_ptr, RESOLUTION_X, RESOLUTION_Y, "FDF");
-	ft_init(&data);
-	draw(&data);
-	mlx_hook(data.win_ptr, 2, 0, press_key, &data);
-	mlx_hook(data.win_ptr, 4, 0, mouse_key, &data);
-	mlx_hook(data.win_ptr, 6, 0, mouse_move, &data);
-	mlx_hook(data.win_ptr, 17, 0, ft_close, &data);
-	mlx_loop(data.mlx_ptr);
+	if (argc = 2 )
+	{
+		read_file(argv[1], &data);
+		data.mlx_ptr = mlx_init();
+		if (!data.mlx_ptr)
+			ft_error(NULL);
+		data.win_ptr = mlx_new_window(data.mlx_ptr, RESOLUTION_X, RESOLUTION_Y, "FDF");
+		ft_init(&data);
+		draw(&data);
+		mlx_hook(data.win_ptr, 2, 0, press_key, &data);
+		mlx_hook(data.win_ptr, 4, 0, mouse_key, &data);
+		mlx_hook(data.win_ptr, 6, 0, mouse_move, &data);
+		mlx_hook(data.win_ptr, 17, 0, ft_close, &data);
+		mlx_loop(data.mlx_ptr);
+	}
+	ft_error(NULL);
 	return (0);
 }
 
@@ -124,6 +129,7 @@ void	ft_init(fdf *data)
 {
 	// data->width = 0;
 	// data->height = 0;
+	errno = 0;
 	data->flatten = 1;
 	data->shift_x = RESOLUTION_X/2;
 	data->shift_y = RESOLUTION_Y/3;
