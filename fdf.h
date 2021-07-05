@@ -32,6 +32,15 @@ typedef struct
 	void	*win_ptr;
 }				fdf;
 
+typedef struct
+{
+	void	*img_ptr;
+	char	**xpm_data;
+	int	*bits_per_pixel;
+	int	*size_line;
+	int	*endian;
+}				t_img;
+
 void	ft_init(fdf *data);
 int		ft_close(void *param);
 void	ft_error(char *s);
@@ -40,3 +49,4 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data);
 void	draw(fdf *data);
 
 #endif
+

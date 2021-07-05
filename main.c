@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 {
 	fdf	data;
 
-	if (argc = 2 )
+	if (argc == 2)
 	{
 		read_file(argv[1], &data);
 		data.mlx_ptr = mlx_init();

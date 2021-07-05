@@ -38,10 +38,10 @@ void	ft_man(fdf *data)
 
 void	isometric (float *x, float *y, int z, fdf *data)
 {
-	//*x = (*x - *y) * cos(data->cos);
-	//*y = (*x + *y) * sin(data->sin) - z * data->flatten;
-	*x = *x * cos(data->cos) - *y * sin(data->sin);
-	*y = *y * sin(data->sin) + *y * cos(data->cos) - z * data->flatten;
+	*x = (*x - *y) * cos(data->cos);
+	*y = (*x + *y) * sin(data->sin) - z * data->flatten;
+	//*x = *x * cos(data->cos) - *y * sin(data->sin);
+	//*y = *y * sin(data->sin) + *y * cos(data->cos) - z * data->flatten;
 
 
 }
@@ -97,9 +97,10 @@ void	draw(fdf *data)
 {
 	int x;
 	int y;
+	//t_img	imp;
 
-	y = 0;
 	ft_man(data);
+	y = 0;
 	while (y < data->height)
 	{
 		x = 0;
@@ -108,7 +109,7 @@ void	draw(fdf *data)
 			if (x < data->width - 1)
 				bresenham(x, y, x + 1, y, data);
 			if (y < data->height - 1)
-			bresenham(x, y, x, y + 1, data);
+				bresenham(x, y, x, y + 1, data);
 			x++;
 		}
 		y++;
