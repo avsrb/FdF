@@ -92,6 +92,13 @@ int	press_key(int key, fdf *data)
 		data->cos += 0.1;
 	if (key == 88)
 		data->cos -= 0.1;
+	if (key == 33)
+		data->rotation_x -= 0.05;
+	if (key == 30)
+		data->rotation_x += 0.05;
+
+
+	printf("%d\n", key);
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	draw(data);
 	return (0);
@@ -141,4 +148,5 @@ void	ft_init(fdf *data)
 	data->shift_z = 0;
 	data->shift_zoom = 0;
 	data->flag_mv_mouse = 0;
+	data->rotation_x = 0;
 }

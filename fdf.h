@@ -32,6 +32,7 @@ typedef struct
 	int	shift_zoom;
 	int	flag_mv_mouse;
 	float	flatten;
+	float	rotation_x;
 
 	void	*mlx_ptr;
 	void	*win_ptr;

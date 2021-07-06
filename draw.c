@@ -59,9 +59,9 @@ void	pixel_put(t_img *img, int x, int y, int color)
 	}
 }
 
-void	rotate_x(int *y, int *z, float alpha)
+void	rotate_x(float *y, float *z, float alpha)
 {
-	int y_last;
+	float y_last;
 
 	y_last = *y;
 	*y = y_last * cos(alpha) + *z * sin(alpha);
@@ -70,11 +70,11 @@ void	rotate_x(int *y, int *z, float alpha)
 
 void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 {
-	float	x_step;
+	float	x_step; 
 	float	y_step;
-	int	max;
-	int	z;
-	int	z1;
+	float	max;
+	float	z;
+	float	z1;
 	
 	z = data->z_matrix[(int)y][(int)x];
 	z1 = data->z_matrix[(int)y1][(int)x1];
@@ -86,6 +86,8 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 		z1 += data->shift_z;
 		z += data->shift_z;
 	}
+	rotate_x(&y, &z, data->rotation_x);
+	rotate_x(&y1, &z1, data->rotation_x);
 	isometric(&x, &y, z, data);
 	isometric(&x1, &y1, z1, data);
 
@@ -100,6 +102,7 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 	y += data->shift_y;
 	x1 += data->shift_x;
 	y1 += data->shift_y;
+
 
 	x_step = x1 - x;
 	y_step = y1 - y;
