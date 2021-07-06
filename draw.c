@@ -59,6 +59,14 @@ void	pixel_put(t_img *img, int x, int y, int color)
 	}
 }
 
+void	rotate_x(int *y, int *z, float alpha)
+{
+	int y_last;
+
+	y_last = *y;
+	*y = y_last * cos(alpha) + *z * sin(alpha);
+	*z = -y_last * sin(alpha) + *z * cos(alpha);
+}
 
 void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 {
@@ -71,12 +79,6 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 	z = data->z_matrix[(int)y][(int)x];
 	z1 = data->z_matrix[(int)y1][(int)x1];
 	
-	if (data->zoom <= 2)
-		data->zoom = 2;
-	x *=data->zoom;
-	y *=data->zoom;
-	x1 *=data->zoom;
-	y1 *=data->zoom;
 
 	data->color = (z || z1) ? 0xe80c0c : 0xffffff;
 	if (z1 > 0)
@@ -86,6 +88,13 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 	}
 	isometric(&x, &y, z, data);
 	isometric(&x1, &y1, z1, data);
+
+	if (data->zoom <= 2)
+		data->zoom = 2;
+	x *=data->zoom;
+	y *=data->zoom;
+	x1 *=data->zoom;
+	y1 *=data->zoom;
 
 	x += data->shift_x;
 	y += data->shift_y;

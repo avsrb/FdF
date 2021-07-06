@@ -31,7 +31,7 @@ typedef struct
 	int shift_z;
 	int	shift_zoom;
 	int	flag_mv_mouse;
-	int	flatten;
+	float	flatten;
 
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -54,4 +54,3 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img);
 void	draw(fdf *data);
 
 #endif
-

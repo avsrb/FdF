@@ -77,9 +77,9 @@ int	press_key(int key, fdf *data)
 		data->cos += 0.1;
 	}
 	if (key == 43)
-		data->flatten -= 1;
+		data->flatten -= 0.1;
 	if (key == 47)
-		data->flatten += 1;
+		data->flatten += 0.1;
 	if (key == 35)
 		data->sin = data->cos = 0;
 	if (key == 34)
