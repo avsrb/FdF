@@ -67,7 +67,7 @@ void	fill_matrix(int *z_line, char *line)
 	free(nums);
 }
 
-void	read_file(char *file_name, fdf *data)
+void	read_file(char *file_name, t_fdf *data)
 {
 	int		fd;
 	int		i;

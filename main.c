@@ -2,113 +2,38 @@
 
 int	ft_close(void *param)
 {
-	// mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	(void)param;
 	exit(0);
 }
 
 void	ft_error(char *s)
 {
-	if (errno == 0)
-		ft_putendl_fd(s, 2);
-	else
-		perror(s);
-	exit(1);
+	perror(s);
+	exit(EXIT_FAILURE);
 }
 
-int mouse_move(int x, int y, fdf *data)
+void	ft_init(t_fdf *data)
 {
-	if (data->flag_mv_mouse == 1)
-	{
-		data->shift_x = x;
-		data->shift_y = y;
-	}
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	draw(data);
-	// ft_printf("%d\n%d\n", x, y);
-	return (0);
+	data->flatten = 0;
+	data->shift_x = RESOLUTION_X/2;
+	data->shift_y = RESOLUTION_Y/3;
+	data->sin = data->cos = 0;
+
+	data->zoom = ZOOM;
+
+	data->shift_zoom = 0;
+
+	data->rotation_x = 0;
+	data->rotation_y = 0;
+	data->rotation_z = 0;
+	
+	data->flag_mv_mouse = 0;
+	data->flag_iso = 0;
 }
-
-int	mouse_key(int key, int x, int y, fdf *data)
-{
-	(void)x;
-	(void)y;
-	ft_printf("%d\n", key);
-	if (key == 1)
-		data->flag_mv_mouse = 1;
-	if (key == 2)
-		data->flag_mv_mouse = 0;
-	if (key == 3)
-		ft_init(data);
-	if (key == 4)
-		data->zoom += 2;
-	if (key == 5)
-		data->zoom -= 2;
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	draw(data);
-	return (0);
-}
-
-int	press_key(int key, fdf *data)
-{
-	//ft_printf("%d\n", key);
-	if (key == 126)
-		data->shift_y -= 10;
-	if (key == 125)
-		data->shift_y += 10;
-	if (key == 123)
-		data->shift_x -= 10;
-	if (key == 124)
-		data->shift_x += 10;
-	if (key == 24 || key == 69)
-		data->zoom += 2;
-	if (key == 27 || key == 78)
-		data->zoom -= 2;
-	if (key == 53)
-		ft_close(data);
-	if (key == 92 || key == 85)
-	{
-		data->sin -= 0.1;
-		data->cos -= 0.1;
-	}
-	if (key == 83 || key == 89)
-	{
-		data->sin += 0.1;
-		data->cos += 0.1;
-	}
-	if (key == 43)
-		data->flatten -= 0.1;
-	if (key == 47)
-		data->flatten += 0.1;
-	if (key == 35)
-		data->sin = data->cos = 0;
-	if (key == 34)
-		data->sin = data->cos = 0.523599;
-	if (key == 84)
-		data->sin += 0.1;
-	if (key == 91)
-		data->sin -= 0.1;
-	if (key == 86)
-		data->cos += 0.1;
-	if (key == 88)
-		data->cos -= 0.1;
-	if (key == 33)
-		data->rotation_x -= 0.05;
-	if (key == 30)
-		data->rotation_x += 0.05;
-
-
-	printf("%d\n", key);
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	draw(data);
-	return (0);
-}
-
-
 
 int main(int argc, char **argv)
 {
-	fdf	data;
+	t_fdf	data;
 
 	if (argc == 2)
 	{
@@ -127,26 +52,4 @@ int main(int argc, char **argv)
 	}
 	ft_error(NULL);
 	return (0);
-}
-
-
-void	ft_init(fdf *data)
-{
-	// data->width = 0;
-	// data->height = 0;
-	errno = 0;
-	data->flatten = 1;
-	data->shift_x = RESOLUTION_X/2;
-	data->shift_y = RESOLUTION_Y/3;
-	//data->sin = 0.523599;
-	//data->cos = 0.523599;
-	data->sin = 0.8;
-	data->cos = 0.8;
-
-	data->zoom = ZOOM;
-
-	data->shift_z = 0;
-	data->shift_zoom = 0;
-	data->flag_mv_mouse = 0;
-	data->rotation_x = 0;
 }

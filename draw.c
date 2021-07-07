@@ -1,8 +1,5 @@
 #include "fdf.h"
 
-#define MAX(a, b) ((a > b) ? a : b)
-#define MOD(a) ((a < 0) ? -a : a)
-
 float	ft_mod(float i)
 {
 	if (i < 0)
@@ -18,7 +15,7 @@ float	ft_max(float x, float y)
 		return (y);
 }
 
-void	ft_man(fdf *data)
+void	ft_man(t_fdf *data)
 {
 	int y; 
 	y = 10;
@@ -33,17 +30,13 @@ void	ft_man(fdf *data)
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "Z-Axic - 1(3)/7(9)");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Projection");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "ISO: I Key");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "Parallel: P Key");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "Parallel: 5 Key");
 }
 
-void	isometric (float *x, float *y, int z, fdf *data)
+void	isometric (float *x, float *y, float *z, t_fdf *data)
 {
 	*x = (*x - *y) * cos(data->cos);
-	*y = (*x + *y) * sin(data->sin) - z * data->flatten;
-	//*x = *x * cos(data->cos) - *y * sin(data->sin);
-	//*y = *y * sin(data->sin) + *y * cos(data->cos) - z * data->flatten;
-
-
+	*y = (*x + *y) * sin(data->sin) - *z;
 }
 
 void	pixel_put(t_img *img, int x, int y, int color)
@@ -53,13 +46,13 @@ void	pixel_put(t_img *img, int x, int y, int color)
 	{
 		if (y > 0 && y < RESOLUTION_Y)
 		{
-		dst = img->xpm_data + (y * img->size_line + x * (img->bits_per_pixel / 8));
-		*(unsigned int *)dst = color;
+			dst = img->xpm_data + (y * img->size_line + x * (img->bits_per_pixel / 8));
+			*(unsigned int *)dst = color;
 		}
 	}
 }
 
-void	rotate_x(float *y, float *z, float alpha)
+void	rotate_x(float *y, float *z, double alpha)
 {
 	float y_last;
 
@@ -68,7 +61,27 @@ void	rotate_x(float *y, float *z, float alpha)
 	*z = -y_last * sin(alpha) + *z * cos(alpha);
 }
 
-void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
+void	rotate_y(float *x, float *z, double alpha)
+{
+	float x_last;
+
+	x_last = *x;
+	*x = x_last * cos(alpha) + *z * sin(alpha);
+	*z = -x_last * sin(alpha) + *z * cos(alpha);
+}
+
+void	rotate_z(float *x, float *y, double alpha)
+{
+	float x_last;
+	float y_last;
+
+	x_last = *x;
+	y_last = *y;
+	*x = x_last * cos(alpha) + y_last * sin(alpha);
+	*y = -x_last * sin(alpha) + y_last * cos(alpha);
+}
+
+void	bresenham(float x, float y, float x1, float y1, t_fdf *data, t_img *img)
 {
 	float	x_step; 
 	float	y_step;
@@ -79,17 +92,25 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 	z = data->z_matrix[(int)y][(int)x];
 	z1 = data->z_matrix[(int)y1][(int)x1];
 	
-
 	data->color = (z || z1) ? 0xe80c0c : 0xffffff;
-	if (z1 > 0)
+	
+	if (z1 > 0.000001 || z > 0.000001)
 	{
-		z1 += data->shift_z;
-		z += data->shift_z;
+		z *= data->flatten;
+		z1 *= data->flatten;
 	}
+
 	rotate_x(&y, &z, data->rotation_x);
 	rotate_x(&y1, &z1, data->rotation_x);
-	isometric(&x, &y, z, data);
-	isometric(&x1, &y1, z1, data);
+	rotate_y(&x, &z, data->rotation_y);
+	rotate_y(&x1, &z1, data->rotation_y);
+	rotate_z(&x, &y, data->rotation_z);
+	rotate_z(&x1, &y1, data->rotation_z);
+	if (data->flag_iso == 1)
+	{
+		isometric(&x, &y, &z, data);
+		isometric(&x1, &y1, &z1, data);
+	}
 
 	if (data->zoom <= 2)
 		data->zoom = 2;
@@ -102,7 +123,6 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 	y += data->shift_y;
 	x1 += data->shift_x;
 	y1 += data->shift_y;
-
 
 	x_step = x1 - x;
 	y_step = y1 - y;
@@ -119,7 +139,7 @@ void	bresenham(float x, float y, float x1, float y1, fdf *data, t_img *img)
 	}
 }
 
-void	draw(fdf *data)
+void	draw(t_fdf *data)
 {
 	int x;
 	int y;
