@@ -18,20 +18,34 @@ float	ft_max(float x, float y)
 void	ft_man(t_fdf *data)
 {
 	int y; 
+
 	y = 10;
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 60, y, 0xffffff, "How to Use");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 30, 0xffffff, "Zoom: Scroll or +/-");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Move: Arrows");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Flatten: </>");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Rotate: Press left on or right off mouse button"); ///хуета
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Rotate:");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "X-Axis - 2/8");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "Y-Axic - 4/6");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "Z-Axic - 1(3)/7(9)");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, y += 25, 0xffffff, "Projection");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "ISO: I Key");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 40, y += 20, 0xffffff, "Parallel: 5 Key");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					60, y, 0xffffff, "How to Use");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					20, y += 30, 0xffffff, "Zoom: Scroll or +/-");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					20, y += 25, 0xffffff, "Move: Arrows");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					20, y += 25, 0xffffff, "Flatten: </>");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					20, y += 25, 0xffffff, "Rotate: Press left on or right off mouse button"); ///хуета
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					20, y += 25, 0xffffff, "Rotate:");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					40, y += 20, 0xffffff, "X-Axis - 2/8");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					40, y += 20, 0xffffff, "Y-Axic - 4/6");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					40, y += 20, 0xffffff, "Z-Axic - 1(3)/7(9)");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					20, y += 25, 0xffffff, "Projection");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					40, y += 20, 0xffffff, "ISO: I Key");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, \
+					40, y += 20, 0xffffff, "Parallel: 5 Key");
 }
+
 
 void	isometric (float *x, float *y, float *z, t_fdf *data)
 {
@@ -39,14 +53,14 @@ void	isometric (float *x, float *y, float *z, t_fdf *data)
 	*y = (*x + *y) * sin(data->sin) - *z;
 }
 
-void	pixel_put(t_img *img, int x, int y, int color)
+void	pixel_put(t_fdf *data, int x, int y, int color)
 {
 	char	*dst;
 	if (x > 0 && x < RESOLUTION_X)
 	{
 		if (y > 0 && y < RESOLUTION_Y)
 		{
-			dst = img->xpm_data + (y * img->size_line + x * (img->bits_per_pixel / 8));
+			dst = data->xpm_data + (y * data->size_line + x * (data->bits_per_pixel / 8));
 			*(unsigned int *)dst = color;
 		}
 	}
@@ -81,7 +95,7 @@ void	rotate_z(float *x, float *y, double alpha)
 	*y = -x_last * sin(alpha) + y_last * cos(alpha);
 }
 
-void	bresenham(float x, float y, float x1, float y1, t_fdf *data, t_img *img)
+void	bresenham(float x, float y, float x1, float y1, t_fdf *data)
 {
 	float	x_step; 
 	float	y_step;
@@ -133,7 +147,7 @@ void	bresenham(float x, float y, float x1, float y1, t_fdf *data, t_img *img)
 	
 	while ((int)(x - x1) || (int)(y - y1))
 	{
-		pixel_put(img, x, y, data->color);
+		pixel_put(data, x, y, data->color);
 		x += x_step;
 		y += y_step;
 	}
@@ -143,10 +157,11 @@ void	draw(t_fdf *data)
 {
 	int x;
 	int y;
-	t_img	img;
+	int x1;
+	int y1;
 
-	img.img_ptr = mlx_new_image(data->mlx_ptr, RESOLUTION_X, RESOLUTION_Y);
-	img.xpm_data = mlx_get_data_addr(img.img_ptr, &img.bits_per_pixel, &img.size_line, &img.endian);
+	data->img_ptr = mlx_new_image(data->mlx_ptr, RESOLUTION_X, RESOLUTION_Y);
+	data->xpm_data = mlx_get_data_addr(data->img_ptr, &data->bits_per_pixel, &data->size_line, &data->endian);
 
 	y = 0;
 	while (y < data->height)
@@ -155,13 +170,15 @@ void	draw(t_fdf *data)
 		while (x < data->width)
 		{
 			if (x < data->width - 1)
-				bresenham(x, y, x + 1, y, data, &img);
+			{
+				bresenham(x, y, x + 1, y, data);
+			}
 			if (y < data->height - 1)
-				bresenham(x, y, x, y + 1, data, &img);
+				bresenham(x, y, x, y + 1, data);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img.img_ptr, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr, 0, 0);
 	ft_man(data);
 }

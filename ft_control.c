@@ -1,11 +1,11 @@
 #include "fdf.h"
 
-int ft_init_paralel(t_fdf *data)
+int	ft_init_paralel(t_fdf *data)
 {
 	data->flag_iso = 0;
 	data->flatten = 0;
-	data->shift_x = RESOLUTION_X/2;
-	data->shift_y = RESOLUTION_Y/3;
+	data->shift_x = RESOLUTION_X / 2;
+	data->shift_y = RESOLUTION_Y / 3;
 	data->zoom = ZOOM;
 	data->shift_zoom = 0;
 	data->rotation_x = 0;
@@ -14,7 +14,7 @@ int ft_init_paralel(t_fdf *data)
 	return (0);
 }
 
-int mouse_move(int x, int y, t_fdf *data)
+int	mouse_move(int x, int y, t_fdf *data)
 {
 	if (data->flag_mv_mouse == 1)
 	{
@@ -29,7 +29,6 @@ int	mouse_key(int key, int x, int y, t_fdf *data)
 {
 	(void)x;
 	(void)y;
-	// ft_printf("%d\n", key);
 	if (key == 1)
 		data->flag_mv_mouse = 1;
 	if (key == 2)
@@ -49,7 +48,8 @@ int	ft_control_rotation(int key, t_fdf *data)
 	if (key == 34)
 	{
 		ft_init(data);
-		data->sin = data->cos = 0.523599;
+		data->sin = 0.523599;
+		data->cos = 0.523599;
 		data->flag_iso = 1;
 		data->flatten = 1;
 	}
@@ -72,7 +72,6 @@ int	ft_control_rotation(int key, t_fdf *data)
 
 int	press_key(int key, t_fdf *data)
 {
-	//	printf("%d\n", key);
 	if (key == 126)
 		data->shift_y -= 10;
 	if (key == 125)
@@ -94,8 +93,7 @@ int	press_key(int key, t_fdf *data)
 	if (key == 34 || key == 87 || key == 34 || key == 87 || \
 		key == 91 || key == 84 || key == 86 || key == 88 || \
 		key == 92 || key == 85 ||key == 83 || key == 89)
-			ft_control_rotation(key, data);
-	
+		ft_control_rotation(key, data);
 	draw(data);
 	return (0);
 }

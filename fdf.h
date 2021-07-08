@@ -37,16 +37,21 @@ typedef struct s_fdf
 
 	void	*mlx_ptr;
 	void	*win_ptr;
-}				t_fdf;
 
-typedef struct s_img
-{
 	void	*img_ptr;
 	char	*xpm_data;
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
-}				t_img;
+
+	float	x;
+	float	y;
+	float	z;
+	float	x1;
+	float	y1;
+	float	z1;
+
+}				t_fdf;
 
 int		mouse_move(int x, int y, t_fdf *data);
 int		mouse_key(int key, int x, int y, t_fdf *data);
@@ -56,7 +61,7 @@ void	ft_init(t_fdf *data);
 int		ft_close(void *param);
 void	ft_error(char *s);
 void	read_file(char *file_name, t_fdf *data);
-void	bresenham(float x, float y, float x1, float y1, t_fdf *data, t_img *img);
+void	bresenham(float x, float y, float x1, float y1, t_fdf *data);
 void	draw(t_fdf *data);
 
 #endif
