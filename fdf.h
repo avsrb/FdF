@@ -16,6 +16,7 @@
 # define RESOLUTION_Y 1080
 # define ZOOM 10
 
+
 typedef struct s_fdf
 {
 	int		width;
@@ -47,11 +48,10 @@ typedef struct s_fdf
 	float	x;
 	float	y;
 	float	z;
-	float	x1;
-	float	y1;
-	float	z1;
 
 }				t_fdf;
+
+
 
 int		mouse_move(int x, int y, t_fdf *data);
 int		mouse_key(int key, int x, int y, t_fdf *data);

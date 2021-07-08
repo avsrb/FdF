@@ -18,7 +18,6 @@ float	ft_max(float x, float y)
 void	ft_man(t_fdf *data)
 {
 	int y; 
-
 	y = 10;
 	mlx_string_put(data->mlx_ptr, data->win_ptr, \
 					60, y, 0xffffff, "How to Use");
@@ -157,8 +156,6 @@ void	draw(t_fdf *data)
 {
 	int x;
 	int y;
-	int x1;
-	int y1;
 
 	data->img_ptr = mlx_new_image(data->mlx_ptr, RESOLUTION_X, RESOLUTION_Y);
 	data->xpm_data = mlx_get_data_addr(data->img_ptr, &data->bits_per_pixel, &data->size_line, &data->endian);
@@ -170,9 +167,7 @@ void	draw(t_fdf *data)
 		while (x < data->width)
 		{
 			if (x < data->width - 1)
-			{
 				bresenham(x, y, x + 1, y, data);
-			}
 			if (y < data->height - 1)
 				bresenham(x, y, x, y + 1, data);
 			x++;
