@@ -9,8 +9,6 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	i2 = 0;
 	if (needle[0] == '\0')
 		return ((char *)haystack);
-	if (ft_strlen(needle) == 0)
-		return ((char *)haystack);
 	while (i1 < len && haystack[i1])
 	{
 		i2 = 0;

@@ -3,7 +3,7 @@
 int	ft_init_paralel(t_fdf *data)
 {
 	data->flag_iso = 0;
-	data->flatten = 0;
+	data->flatten = 1;
 	data->shift_x = RESOLUTION_X / 2;
 	data->shift_y = RESOLUTION_Y / 3;
 	data->zoom = ZOOM;
@@ -16,12 +16,17 @@ int	ft_init_paralel(t_fdf *data)
 
 int	mouse_move(int x, int y, t_fdf *data)
 {
-	if (data->flag_mv_mouse == 1)
-	{
-		data->shift_x = x;
-		data->shift_y = y;
-	}
+	if (data->flag_left_button == 1 && x / 20 > data->mouse_x / 20)
+		data->rotation_y += 0.05;
+	if (data->flag_left_button == 1 && x / 20 < data->mouse_x / 20)
+		data->rotation_y -= 0.05;
+	if (data->flag_left_button == 1 && y / 20 > data->mouse_y / 20)
+		data->rotation_x += 0.05;
+	if (data->flag_left_button == 1 && y / 20 < data->mouse_y / 20)
+		data->rotation_x -= 0.05;
 	draw(data);
+	data->mouse_x = x;
+	data->mouse_y = y;
 	return (0);
 }
 
@@ -30,9 +35,7 @@ int	mouse_key(int key, int x, int y, t_fdf *data)
 	(void)x;
 	(void)y;
 	if (key == 1)
-		data->flag_mv_mouse = 1;
-	if (key == 2)
-		data->flag_mv_mouse = 0;
+		data->flag_left_button = 1;
 	if (key == 3)
 		ft_init(data);
 	if (key == 4)
@@ -85,7 +88,7 @@ int	press_key(int key, t_fdf *data)
 	if (key == 27 || key == 78)
 		data->zoom -= 2;
 	if (key == 53)
-		ft_close(data);
+		ft_close();
 	if (key == 43)
 		data->flatten -= 0.1;
 	if (key == 47)
