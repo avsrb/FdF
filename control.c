@@ -37,7 +37,7 @@ int	mouse_key(int key, int x, int y, t_fdf *data)
 	if (key == 1)
 		data->flag_left_button = 1;
 	if (key == 3)
-		ft_init(data);
+		ft_init_paralel(data);
 	if (key == 4)
 		data->zoom += 2;
 	if (key == 5)
@@ -50,7 +50,7 @@ int	ft_control_rotation(int key, t_fdf *data)
 {
 	if (key == 34)
 	{
-		ft_init(data);
+		ft_init_paralel(data);
 		data->sin = 0.523599;
 		data->cos = 0.523599;
 		data->flag_iso = 1;

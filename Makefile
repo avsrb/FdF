@@ -8,19 +8,19 @@ GCC		=	gcc -Wall -Wextra -Werror
 
 OBJ		=	$(patsubst %.c, %.o, $(LIST))
 
-all			:	$(SERVER) $(CLIENT)
+all		:	$(NAME)
 
 $(NAME)	:	$(OBJ) $(HEADER)
-	$(MAKE) -C ./libft
-	$(GCC) $(LIST) -o $(NAME)
+	@$(MAKE) -C ./libft
+	$(GCC) $(LIST) ./libft/libft.a ./minilibx_macos/libmlx.a -framework OpenGL -framework AppKit -o $(NAME)
 
 clean		:
-	$(MAKE) clean -C ./libft
-	rm -f $(OBJ)
+	@$(MAKE) clean -C ./libft
+	@rm -f $(OBJ)
 
 fclean		:	clean
-	$(MAKE) fclean -C ./libft
-	rm -f $(NAME)
+	@$(MAKE) fclean -C ./libft
+	@rm -f $(NAME)
 
 re			:	fclean all
 

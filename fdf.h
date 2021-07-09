@@ -6,7 +6,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include "libft/libft.h"
-# include "get_next_line/get_next_line.h"
+# include "libft/get_next_line.h"
 # include "minilibx_macos/mlx.h"
 
 # define RESOLUTION_X 1920
@@ -71,6 +71,6 @@ void	ft_error(char *s);
 void	read_file(char *file_name, t_fdf *data);
 void	bresenham(t_point p, t_point p1, t_fdf *data);
 void	draw(t_fdf *data);
-int	ft_init_paralel(t_fdf *data);
+int		ft_init_paralel(t_fdf *data);
 
 #endif

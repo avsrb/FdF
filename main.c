@@ -11,22 +11,22 @@ void	ft_error(char *s)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_init(t_fdf *data)
-{
-	data->flatten = 0;
-	data->shift_x = RESOLUTION_X / 2;
-	data->shift_y = RESOLUTION_Y / 3;
-	data->sin = 0;
-	data->cos = 0;
-	data->zoom = ZOOM;
-	data->shift_zoom = 0;
-	data->rotation_x = 0;
-	data->rotation_y = 0;
-	data->rotation_z = 0;
-	data->flag_mv_mouse = 0;
-	data->flag_iso = 0;
-	data->flag_left_button = 0;
-}
+//void	ft_init(t_fdf *data)
+//{
+//	data->flatten = 0;
+//	data->shift_x = RESOLUTION_X / 2;
+//	data->shift_y = RESOLUTION_Y / 3;
+//	data->sin = 0;
+//	data->cos = 0;
+//	data->zoom = ZOOM;
+//	data->shift_zoom = 0;
+//	data->rotation_x = 0;
+//	data->rotation_y = 0;
+//	data->rotation_z = 0;
+//	data->flag_mv_mouse = 0;
+//	data->flag_iso = 0;
+//	data->flag_left_button = 0;
+//}
 
 int	mouse_release(int key, int x, int y, t_fdf *data)
 {
