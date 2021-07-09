@@ -14,7 +14,15 @@
 
 # define RESOLUTION_X 1920
 # define RESOLUTION_Y 1080
-# define ZOOM 10
+# define ZOOM 1
+
+typedef	struct s_point
+{
+	float	x;
+	float	y;
+	float	z;
+
+}			t_point;
 
 
 typedef struct s_fdf
@@ -45,10 +53,6 @@ typedef struct s_fdf
 	int		size_line;
 	int		endian;
 
-	float	x;
-	float	y;
-	float	z;
-
 }				t_fdf;
 
 
@@ -61,7 +65,7 @@ void	ft_init(t_fdf *data);
 int		ft_close(void *param);
 void	ft_error(char *s);
 void	read_file(char *file_name, t_fdf *data);
-void	bresenham(float x, float y, float x1, float y1, t_fdf *data);
+void	bresenham(t_point p, t_point p1, t_fdf *data);
 void	draw(t_fdf *data);
 
 #endif
